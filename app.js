@@ -19,7 +19,8 @@ app.get('/search', (req, res) => {
     return restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
       restaurant.category.toLowerCase().includes(keyword.toLowerCase())
   })
-  res.render('index', { restaurants: restaurants, keyword: keyword })
+  const notFound = restaurants.length ? false : true
+  res.render('index', { restaurants: restaurants, keyword: keyword, notFound })
 })
 
 app.get('/restaurants/:restaurant_id', (req, res) => {
