@@ -67,4 +67,4 @@
 - Font-awesome 5.8.1
 
 ## 開發者
-- [OneZero](https://github.com/OneZerocococo))
+- [OneZero](https://github.com/OneZerocococo)
