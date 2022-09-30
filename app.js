@@ -19,13 +19,13 @@ app.get('/search', (req, res) => {
     return restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
       restaurant.category.toLowerCase().includes(keyword.toLowerCase())
   })
-  const notFound = restaurants.length ? false : true
-  res.render('index', { restaurants: restaurants, keyword: keyword, notFound })
+  const notFound = !restaurants.length
+  res.render('index', { restaurants, keyword, notFound })
 })
 
 app.get('/restaurants/:restaurant_id', (req, res) => {
   const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.restaurant_id)
-  res.render('show', { restaurant: restaurant })
+  res.render('show', { restaurant })
 })
 
 app.listen(port, () => {
