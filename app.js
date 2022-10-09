@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 const app = express()
 const port = 3000
 const Restaurantlist = require('./models/restaurant')
-const restaurant = require('./models/restaurant')
 mongoose.connect(process.env.MONGODB_URI)
 const db = mongoose.connection
 
@@ -58,12 +57,19 @@ app.post('/restaurants', (req, res) => {
 // 瀏覽特定餐廳
 app.get('/restaurants/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id
-  return restaurant.findById(id)
+  return Restaurantlist.findById(id)
     .lean()
     .then((restaurant) => res.render('show', { restaurant }))
-    .catch(error => console.log(error))
+    .catch(err => console.log(err))
 })
-
+// 刪除餐廳
+app.post('/restaurants/:restaurant_id/delete', (req, res) => {
+  const id = req.params.restaurant_id
+  return Restaurantlist.findById(id)
+    .then(restaurant => restaurant.remove())
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
+})
 app.listen(port, () => {
   console.log(`Express is listening on localhost:${port}`)
 })
