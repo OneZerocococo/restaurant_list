@@ -3,7 +3,7 @@ const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const app = express()
 const port = 3000
-const restaurantList = require('./restaurant.json')
+const Restaurantlist = require('./models/restaurant')
 mongoose.connect(process.env.MONGODB_URI)
 const db = mongoose.connection
 
@@ -22,7 +22,10 @@ app.use(express.static('public'))
 // setting body-parser
 app.use(express.urlencoded({ extended: true }))
 app.get('/', (req, res) => {
-  res.render('index', { restaurants: restaurantList.results })
+  Restaurantlist.find()
+    .lean()
+    .then((restaurant) => res.render('index', { restaurant }))
+    .catch((error) => console.log(error))
 })
 app.post('/', (req, res) => {
   console.log('req.body', req.body)
