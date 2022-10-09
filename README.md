@@ -42,7 +42,7 @@
 4. 環境變數設置：
 
    ```bash
-   mongoose.connect(process.env.MONGODB_RESTAURANT_URI)
+   mongoose.connect(process.env.MONGODB_URI)
    ```
 
 5. 執行專案：
