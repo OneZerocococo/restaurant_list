@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const app = express()
 const port = 3000
 const Restaurantlist = require('./models/restaurant')
+const restaurant = require('./models/restaurant')
 mongoose.connect(process.env.MONGODB_URI)
 const db = mongoose.connection
 
@@ -42,9 +43,25 @@ app.get('/search', (req, res) => {
   res.render('index', { restaurants, keyword, notFound })
 })
 
+// 新增餐廳頁面
+app.get('/restaurants/new', (req, res) => {
+  res.render('new')
+})
+
+// 新增餐廳
+app.post('/restaurants', (req, res) => {
+  Restaurantlist.create(req.body)
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
+})
+
+// 瀏覽特定餐廳
 app.get('/restaurants/:restaurant_id', (req, res) => {
-  const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.restaurant_id)
-  res.render('show', { restaurant })
+  const id = req.params.restaurant_id
+  return restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('show', { restaurant }))
+    .catch(error => console.log(error))
 })
 
 app.listen(port, () => {
