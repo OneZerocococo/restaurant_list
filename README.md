@@ -39,20 +39,25 @@
    ```bash
    npm install
    ```
+4. 環境變數設置：
 
-4. 執行專案：
+   ```bash
+   mongoose.connect(process.env.MONGODB_RESTAURANT_URI)
+   ```
+
+5. 執行專案：
 
    ```bash
    nodemon app.js
    ```
 
-5. 若看見此行訊息則代表順利運行，打開瀏覽器進入到以下網址
+6. 若看見此行訊息則代表順利運行，打開瀏覽器進入到以下網址
 
    ```bash
    Express is listening on localhost:3000
    ```
 
-6. 若欲暫停使用
+7. 若欲暫停使用
 
    ```bash
    ctrl + c
@@ -65,6 +70,7 @@
 - Express-Handlebars 3.0.0
 - Bootstrap 4.3.1
 - Font-awesome 5.8.1
+- mongoose 6.6.5
 
 ## 開發者
 - [OneZero](https://github.com/OneZerocococo)
