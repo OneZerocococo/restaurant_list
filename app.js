@@ -31,15 +31,41 @@ app.post('/', (req, res) => {
   console.log('req.body', req.body)
   res.render('index')
 })
+// 編輯餐廳頁面 
+app.get('/restaurants/:restaurant_id/edit', (req, res) => {
+  const id = req.params.restaurant_id
+  return Restaurantlist.findById(id)
+    .lean()
+    .then((restaurant) => res.render('edit', { restaurant }))
+    .catch(err => console.log(err))
+})
 
+// 更新已編輯餐廳內容
+app.post('/restaurants/:restaurant_id', (req, res) => {
+  const id = req.params.restaurant_id
+  return Restaurantlist.findByIdAndUpdate(id, req.body)
+    .then((restaurant) => res.redirect(`/restaurants/${id}`))
+    .catch(err => console.log(err))
+})
+
+// 搜尋特定餐廳
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword
-  const restaurants = restaurantList.results.filter(restaurant => {
-    return restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
-      restaurant.category.toLowerCase().includes(keyword.toLowerCase())
-  })
-  const notFound = !restaurants.length
-  res.render('index', { restaurants, keyword, notFound })
+  const keyword = req.query.keyword.trim()
+  if (!keyword) {
+    return res.redirect('/')
+  }
+
+  Restaurantlist.find()
+    .lean()
+    .then((restaurant) => {
+      const searchedRestaurant = restaurant.filter(
+        (data) =>
+          data.name.toLowerCase().includes(keyword) ||
+          data.category.includes(keyword)
+      )
+      res.render('index', { restaurant: searchedRestaurant, keyword: keyword })
+    })
+
 })
 
 // 新增餐廳頁面
