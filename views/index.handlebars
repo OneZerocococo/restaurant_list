@@ -2,22 +2,34 @@
 <div class="container search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
+      <h4 class="mb-2">尋找餐廳：</h4>
       <form action="/search">
-        <h4 class="mb-2">尋找餐廳：</h4>
-        <div class="input-group">
-          <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
-            value="{{keyword}}" aria-describedby="search-button">
-          <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2">
+          <div class="input-group col-md-8">
+            <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
+              value="{{keyword}}" aria-describedby="search-button">
+            <button class="btn btn-major mr-2" type="submit" id="search-button"><i class="fas fa-search"></i></button>
           </div>
+          {{!-- 分類 --}}
+          <div class="input-group">
+            <select type="submit" class="form-select" name="sort">
+              <option selected>Sort</option>
+              <option value="1">A -> Z</option>
+              <option value="2">Z -> A</option>
+              <option value="3">類別</option>
+              <option value="3">地區</option>
+            </select>
+          </div>
+
         </div>
       </form>
-      <div class="add-restaurant mt-2">
-        <a href="/restaurants/new"><button class="btn btn-warning">新增餐廳</button></a>
-      </div>
+
     </div>
+
   </div>
+
 </div>
+
 {{#if notFound}}
 <div class="container mt-5">
   <h2>找不到「{{keyword}}」相關的餐廳，請重新查詢</h2>
