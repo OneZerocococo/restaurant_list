@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Restaurantlist = require('../../models/restaurant')
+const sortSelect = require('../../utilities/sortSelect')
 
 router.get('/', (req, res) => {
   Restaurantlist.find()
@@ -17,17 +18,21 @@ router.post('/', (req, res) => {
 router.get('/search', (req, res) => {
   let keyword = req.query.keyword.trim()
   const regKeyword = new RegExp(keyword, 'gi')
+  const sortSelector = req.query.sortSelector
+  const [sortby, sortBool] = sortSelect(sortSelector)
+
   let notFound = false
 
   return Restaurantlist.find({
     $or: [{ name: regKeyword }, { category: regKeyword }],
   })
+    .sort(sortby)
     .lean()
     .then((restaurant) => {
       if (!restaurant || !restaurant.length) {
         notFound = true
       }
-      res.render('index', { restaurant, notFound, keyword, regKeyword })
+      res.render('index', { restaurant, notFound, keyword, sortBool })
     })
     .catch(error => {
       console.log(error)
