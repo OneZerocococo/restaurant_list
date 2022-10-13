@@ -15,22 +15,24 @@ router.post('/', (req, res) => {
 
 // 搜尋特定餐廳
 router.get('/search', (req, res) => {
-  const keyword = req.query.keyword.trim()
-  if (!keyword) {
-    return res.redirect('/')
-  }
+  let keyword = req.query.keyword.trim()
+  const regKeyword = new RegExp(keyword, 'gi')
+  let notFound = false
 
-  Restaurantlist.find()
+  return Restaurantlist.find({
+    $or: [{ name: regKeyword }, { category: regKeyword }],
+  })
     .lean()
     .then((restaurant) => {
-      const searchedRestaurant = restaurant.filter(
-        (data) =>
-          data.name.toLowerCase().includes(keyword) ||
-          data.category.includes(keyword)
-      )
-      res.render('index', { restaurant: searchedRestaurant, keyword: keyword })
+      if (!restaurant || !restaurant.length) {
+        notFound = true
+      }
+      res.render('index', { restaurant, notFound, keyword, regKeyword })
     })
-
+    .catch(error => {
+      console.log(error)
+    })
 })
+
 
 module.exports = router
