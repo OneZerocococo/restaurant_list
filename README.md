@@ -11,6 +11,7 @@
 - 瀏覽餐廳的詳細資訊
 - 可點擊連結餐廳的地址到 Google 地圖
 - 可搜尋特定餐廳名稱或類型
+- 可新增、修改、移除餐廳資訊
 
 ## 專案畫面
 
@@ -44,20 +45,25 @@
    ```bash
    mongoose.connect(process.env.MONGODB_URI)
    ```
+5. 寫入種子資料：
 
-5. 執行專案：
+ ```bash
+   npm run seed
+   ```
+
+6. 執行專案：
 
    ```bash
    nodemon app.js
    ```
 
-6. 若看見此行訊息則代表順利運行，打開瀏覽器進入到以下網址
+7. 若看見此行訊息則代表順利運行，打開瀏覽器進入到以下網址
 
    ```bash
    Express is listening on localhost:3000
    ```
 
-7. 若欲暫停使用
+8. 若欲暫停使用
 
    ```bash
    ctrl + c
