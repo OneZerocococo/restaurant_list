@@ -4,7 +4,8 @@ const Restaurantlist = require('../../models/restaurant')
 const sortSelect = require('../../utilities/sortSelect')
 
 router.get('/', (req, res) => {
-  Restaurantlist.find()
+  const userId = req.user._id
+  Restaurantlist.find({ userId })
     .lean()
     .then((restaurant) => res.render('index', { restaurant }))
     .catch((error) => console.log(error))
@@ -16,6 +17,7 @@ router.post('/', (req, res) => {
 
 // 搜尋特定餐廳
 router.get('/search', (req, res) => {
+  const userId = req.user._id
   let keyword = req.query.keyword.trim()
   const regKeyword = new RegExp(keyword, 'gi')
   const sortSelector = req.query.sortSelector
@@ -24,6 +26,7 @@ router.get('/search', (req, res) => {
   let notFound = false
 
   return Restaurantlist.find({
+    userId,
     $or: [{ name: regKeyword }, { category: regKeyword }],
   })
     .sort(sortby)
