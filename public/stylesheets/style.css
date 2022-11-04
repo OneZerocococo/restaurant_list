@@ -50,6 +50,19 @@ header {
   border-color: #ced4da;
 }
 
+.user-form {
+  margin: 0 auto;
+  border-radius: 8px;
+  padding: 20px 30px;
+  border: 0;
+  margin-top: -120px;
+}
+
+.sign-form {
+  color: #6a2c00;
+  background-color: #fce2cf;
+}
+
 .card {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
