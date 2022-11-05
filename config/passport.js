@@ -8,7 +8,7 @@ module.exports = app => {
   app.use(passport.session())
   // set LocalStrategy
   passport.use(new LocalStrategy({ usernameField: 'email', passReqToCallback: true }, (req, email, password, done) => {
-    user.findOne({ email })
+    User.findOne({ email })
       .then(user => {
         if (!user) {
           return done(null, false, req.flash('warning_msg', 'That email is not registered!'))
