@@ -49,8 +49,8 @@
 4. 環境變數設置：
 
    ```bash
-   FACEBOOK_APP_ID=SKIP
-   FACEBOOK_APP_SECRET=SKIP
+   FACEBOOK_ID=SKIP
+   FACEBOOK_SECRET=SKIP
    FACEBOOK_CALLBACK=http://localhost:3000/auth/facebook/callback
    SESSION_SECRET=ThisIsMySecret
    mongoose.connect(process.env.MONGODB_URI)
