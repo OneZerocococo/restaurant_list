@@ -26,16 +26,17 @@ router.get('/search', (req, res) => {
   let notFound = false
 
   return Restaurantlist.find({
-    userId,
-    $or: [{ name: regKeyword }, { category: regKeyword }],
+    $and: [{ userId },
+    { $or: [{ name: regKeyword }, { category: regKeyword }] }
+    ]
   })
     .sort(sortby)
     .lean()
-    .then((restaurant) => {
+    .then(restaurant => {
       if (!restaurant || !restaurant.length) {
         notFound = true
       }
-      res.render('index', { restaurant, notFound, keyword, sortBool })
+      res.render('index', { restaurant, keyword, notFound, sortBool })
     })
     .catch(error => {
       console.log(error)
